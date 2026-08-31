@@ -15,6 +15,8 @@ python app.py
 
 Abre [http://127.0.0.1:5099](http://127.0.0.1:5099). En Windows también: `Abrir_ValidarCP.bat`.
 
+En Streamlit Cloud el archivo principal es `streamlit_app.py` y la rama es `main` (no `master`).
+
 1. Estado (obligatorio). Municipio opcional: si lo dejas vacío, busca todo el estado.
 2. RFC y nombre SAT → **Generar TXT**.
 3. En el SAT: casilla *Validar RFC, nombre y CP* → validación masiva → sube el TXT.
