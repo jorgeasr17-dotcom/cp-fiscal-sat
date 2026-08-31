@@ -1,0 +1,5 @@
+data/CPdescarga.txt
+salida/
+__pycache__/
+.venv/
+*.pyc

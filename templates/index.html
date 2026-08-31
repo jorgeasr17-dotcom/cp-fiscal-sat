@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CP fiscal SAT</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <strong>CP fiscal SAT</strong>
+      <span class="muted">{{ n_estados }} estados · validador masivo del SAT · tope {{ sat_max }} por archivo</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="lead">
+      Elija el <b>estado</b>. El <b>municipio es opcional</b>: si lo pone, se busca ahí
+      (puede agregar varios); si lo deja vacío, se buscan todos los CPs del estado.
+      Nombre como en la constancia: <b>NOMBRE(S) APELLIDO PATERNO APELLIDO MATERNO</b>.
+    </p>
+
+    <section class="card">
+      <h2>1. Dónde buscar el CP</h2>
+      <div class="campos tres">
+        <div class="campo">
+          <label for="estado">Estado</label>
+          <select id="estado">
+            <option value="">Coloca aquí el estado</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="municipio">Municipio (opcional)</label>
+          <select id="municipio" disabled>
+            <option value="">Opcional — vacío = todo el estado</option>
+          </select>
+        </div>
+        <div class="campo extra">
+          <label>&nbsp;</label>
+          <button id="agregar" class="btn ghost" type="button" disabled>Agregar municipio</button>
+        </div>
+      </div>
+      <div id="chips" class="chips"></div>
+      <p id="conteo" class="hint">Elija un estado. Si no agrega municipio, se usa todo el estado.</p>
+    </section>
+
+    <section class="card">
+      <h2>2. RFC y nombre</h2>
+      <div class="campos">
+        <div class="campo">
+          <label for="rfc">RFC</label>
+          <input id="rfc" type="text" maxlength="13" autocomplete="off" placeholder="Coloca aquí el RFC" />
+        </div>
+        <div class="campo">
+          <label for="nombre">Nombre SAT</label>
+          <input id="nombre" type="text" autocomplete="off" placeholder="Coloca aquí el nombre SAT" />
+        </div>
+      </div>
+      <div class="actions">
+        <button id="generar" class="btn" type="button">Generar TXT</button>
+        <span id="status-gen" class="muted"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Subir al SAT</h2>
+      <ol class="pasos">
+        <li>Abra el <a href="{{ sat_url }}" target="_blank" rel="noopener">validador del SAT</a> → <b>Ejecutar en línea</b> → captcha.</li>
+        <li>Marque <b>Validar RFC, nombre, denominación o razón social y CP</b>.</li>
+        <li>Use <b>Validación masiva de RFC, Nombre y Código Postal</b> (no la de solo RFC).</li>
+        <li>Suba el TXT y baje la respuesta.</li>
+      </ol>
+    </section>
+
+    <section class="card" id="zona">
+      <h2>4. Respuesta del SAT</h2>
+      <div id="drop" class="drop">
+        <div class="drop-title">Suelte aquí el TXT que bajó el SAT</div>
+        <div class="hint">O elija el archivo. Buscamos la línea «susceptible de recibir facturas».</div>
+        <div class="actions" style="margin-top:12px; justify-content:center;">
+          <label class="btn">Elegir respuesta
+            <input id="file" type="file" accept=".txt,text/plain" hidden />
+          </label>
+        </div>
+      </div>
+      <div id="resultado"></div>
+    </section>
+  </main>
+
+  <footer class="foot">No guarda RFC ni nombres · catálogo SEPOMEX · el SAT se consulta a mano</footer>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
